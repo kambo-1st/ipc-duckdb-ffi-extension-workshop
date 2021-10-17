@@ -1,0 +1,7 @@
+ARG_ENABLE('duckdbext', 'duckdbext support', 'no');
+
+if (PHP_DUCKDBEXT != 'no') {
+	AC_DEFINE('HAVE_DUCKDBEXT', 1, 'duckdbext support enabled');
+
+	EXTENSION('duckdbext', 'duckdbext.c', null, '/DZEND_ENABLE_STATIC_TSRMLS_CACHE=1');
+}
