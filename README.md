@@ -14,3 +14,5 @@ You will need Docker and Docker compose to get started.
 docker-compose run cli
 ```
 
+## Presentation
+http://bohuslav.simek.si/ipc-duckdb-ffi-extension-workshop/
