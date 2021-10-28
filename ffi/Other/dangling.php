@@ -3,10 +3,12 @@
 $ffi = FFI::cdef("struct tm {int tm_sec;};");
 
 function dateTimeDefinition($ffi) {
-    $time = $ffi->new("struct tm");
-    $time->tm_sec = 10;
-    var_dump($time->tm_sec);
-    return FFI::addr($time);
+    $timeFci = $ffi->new("struct tm");
+    $timeFci->tm_sec = 10;
+    var_dump($timeFci->tm_sec);
+    $pointer = FFI::addr($timeFci);
+
+    return $pointer;
 }
 
 $time = dateTimeDefinition($ffi);

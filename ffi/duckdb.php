@@ -1,23 +1,24 @@
 <?php
 
-
+// Start coding here...
 
 /*
-#include "duckdb.h"
 #include <stdio.h>
+#include <stdint.h>
+#include <stdbool.h>
+#include <stdlib.h>
+#include "duckdb.h"
 
 int main() {
-    // SLIDE explain data types
     duckdb_database db;
     duckdb_connection con;
 
-    // SLIDE explain pointers + enums
     if (duckdb_open(NULL, &db) == DuckDBError) {
-        // handle error
+        exit(1);
     }
 
     if (duckdb_connect(db, &con) == DuckDBError) {
-        // handle error
+        exit(1);
     }
 
     // run queries...
@@ -27,31 +28,28 @@ int main() {
     // create a table
     state = duckdb_query(con, "CREATE TABLE integers(i INTEGER, j INTEGER);", NULL);
     if (state == DuckDBError) {
-        // handle error
+        exit(1);
     }
 
     // insert three rows into the table
     state = duckdb_query(con, "INSERT INTO integers VALUES (3, 4), (5, 6), (7, NULL);", NULL);
     if (state == DuckDBError) {
-        // handle error
+        exit(1);
     }
 
     // query rows again
     state = duckdb_query(con, "SELECT * FROM integers", &result);
     if (state == DuckDBError) {
-        // SLIDE automatic parameters conversions
-        printf("%s", result->error_message);
+        printf("%s", result.error_message);
+        exit(1);
     }
 
-    // SLIDE explain structures
     // print the above result
-    idx_t row_count = duckdb_row_count(&result);
-    idx_t column_count = duckdb_column_count(&result);
-    for (idx_t row = 0; row < row_count; row++) {
-        for (idx_t col = 0; col < column_count; col++) {
+    for (idx_t row = 0; row < result.row_count; row++) {
+        for (idx_t col = 0; col < result.column_count; col++) {
             char *str_val = duckdb_value_varchar(&result, col, row);
             printf("%s", str_val);
-            // SLIDE - memory management PHP vs C
+
             duckdb_free(str_val);
         }
         printf("\n");
